@@ -46,20 +46,27 @@ window.addEventListener("scroll", function() {
 const scrollLinks = document.querySelectorAll(".scroll-link");
 scrollLinks.forEach((link) => {
     link.addEventListener("click", (e) => {
-        // prevent default
+
         e.preventDefault();
-        // navigate to specific spot
+
         const id = e.currentTarget.getAttribute("href").slice(1);
         const element = document.getElementById(id);
-
         const navHeight = navbar.getBoundingClientRect().height;
         const containerHeight = linksContainer.getBoundingClientRect().height;
         const fixedNav = navbar.classList.contains("fixed-nav");
         let position = element.offsetTop - navHeight;
-         window.scrollTo({
-            left: 0,
+        linksContainer.style.height = 0;
+
+        if (!fixedNav) {
+            position -= navHeight;
+        }
+        if (navHeight > 82) {
+            position += containerHeight;
+        }
+        window.scrollTo({
+
             top: position,
         });
-       
+        linksContainer.style.height = 0;
     });
 });
